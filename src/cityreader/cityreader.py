@@ -33,7 +33,7 @@ def cityreader(cities=[]):
   # `cities` list
 
     import csv
-    with open('/Users/dylandislers/Lambda School/cs18/Sprint-Challenge--Intro-Python/src/cityreader/cities.csv') as csv_file:
+    with open("cities.csv") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         next(csv_reader)
         line_count = 0
@@ -83,11 +83,18 @@ for c in cities:
 
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
-  # within will hold the cities that fall within the specified region
-    within = []
 
-    # TODO Ensure that the lat and lon valuse are all floats
-    # Go through each city and check to see if it falls within
-    # the specified coordinates.
+    lat_min, lat_max = sorted((float(lat1), float(lat2)))
+    lon_min, lon_max = sorted((float(lon1), float(lon2)))
+
+    within = [city for city in cities if (
+        lat_min <= city.lat <= lat_max and lon_min <= city.lon <= lon_max)]
 
     return within
+
+user_input = ' '.join(
+    input("Enter lat1, lon1, lat2, lon2: ").split()).split(" ")
+
+if user_input:
+        print(cityreader_stretch(
+            user_input[0], user_input[1], user_input[2], user_input[3], cities))
